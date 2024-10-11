@@ -23,25 +23,23 @@
               icon="settings"
               :done="step > 1"
             >
-              <q-input
-                outlined
-                color="primary"
-                v-model="credentials.email"
-                label="User email"
-                dense
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Please type something']"
-              />
-              <q-input
-                outlined
-                color="primary"
-                type="password"
-                v-model="credentials.password"
-                label="password"
-                lazy-rules
-                :rules="[ val => val && val.length > 0 || 'Please type something']"
-                dense
-              />
+              <div class="flex flex-row gap-5">
+                <q-input filled dense v-model="email" type="email" prefix="Email:" >
+                  <template v-slot:prepend>
+                    <q-icon name="mail" />
+                  </template>
+                </q-input>
+                <q-input
+                  outlined
+                  color="primary"
+                  type="password"
+                  v-model="credentials.password"
+                  label="password"
+                  lazy-rules
+                  :rules="[ val => val && val.length > 0 || 'Please type something']"
+                  dense
+                />
+              </div>
             </q-step>
 
             <q-step
@@ -56,7 +54,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.firstname"
                     label="First name"
                     dense
 
@@ -64,7 +62,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.middlename"
                     label="Middle name (optional)"
                     dense
 
@@ -72,7 +70,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.lastname"
                     label="Last name"
                     dense
 
@@ -82,22 +80,7 @@
               <q-separator/>
               <div class="q-py-md">
                 <div class="flex justify-between gap-5">
-                  <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="Gender"
-                    dense
-
-                  />
-                  <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="User email"
-                    dense
-
-                  />
+                  <q-select label="gender" dense outlined v-model="credentials.personal_information.gender" :options="['male', 'female']"/>
                 </div>
               </div>
               <q-separator/>
@@ -107,7 +90,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.address"
                     label="Address"
                     dense
 
@@ -116,13 +99,13 @@
                     outlined
                     type="number"
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.contact_number"
                     label="Contact no."
                     dense
 
                   />
                   <q-input
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.email"
                     label="Email"
                     outlined
                     dense
@@ -137,7 +120,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.contact_person.name"
                     label="Name"
                     dense
 
@@ -145,7 +128,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.contact_person.address"
                     label="Address"
                     dense
 
@@ -154,7 +137,7 @@
                     outlined
                     type="number"
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.contact_person.contact_number"
                     label="Contact no."
                     dense
 
@@ -162,7 +145,7 @@
                   <q-input
                     outlined
                     color="primary"
-                    v-model="credentials.email"
+                    v-model="credentials.personal_information.contact_person.relationship"
                     label="Relationship"
                     dense
 
@@ -174,36 +157,28 @@
                 <span>MANDATORY BENEFIT CONTRIBUTION DETAILS</span>
                 <div class="flex justify-between gap-5">
                   <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="SS NUMBER"
+                    filled
+                    v-model="credentials.personal_information.ss_no"
+                    label="SS #"
+                    mask="#### #### #### ####"
+                    fill-mask="#"
                     dense
-
                   />
                   <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="PAG-IBIG NUMBER"
+                    filled
+                    v-model="credentials.personal_information.pagibig_no"
+                    label="PAGIBIG #"
+                    mask="#### #### #### ####"
+                    fill-mask="#"
                     dense
-
                   />
                   <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="PHILHEALTH"
+                    fiiled
+                    v-model="credentials.personal_information.philhealth"
+                    label="PHILHEALTH #"
+                    mask="#### #### #### ####"
+                    fill-mask="#"
                     dense
-
-                  />
-                  <q-input
-                    outlined
-                    color="primary"
-                    v-model="credentials.email"
-                    label="Relationship"
-                    dense
-
                   />
                 </div>
               </div>
@@ -220,7 +195,7 @@
                 <div class="flex  gap-3">
                   <q-select filled v-model="model" :options="jobOptions" label="Job Title" style="width:205px"/>
                   <q-select filled v-model="department" :options="depOptions" label="Department" style="width:205px"/>
-                  <q-input filled v-model="date" mask="date" :rules="['date']" style="width:205px">
+                  <q-input filled v-model="credentials.personal_information.birth_date" mask="date" :rules="['date']" style="width:205px">
                     <template v-slot:append>
                       <q-icon name="event" class="cursor-pointer">
                         <q-popup-proxy cover transition-show="scale" transition-hide="scale">
@@ -328,8 +303,9 @@ const credentials = reactive({
     firstname: '',
     middlename: '',
     lastname: '',
-    gender: '',
+    gender: 'Select gender',
     birth_date: '',
+    email:'',
     address: '',
     contact_number: '',
     contact_person: {
@@ -337,11 +313,30 @@ const credentials = reactive({
       address: '',
       contact_number: '',
       relationship: ''
-    }
+    },
+    ss_no: '',
+    pagibig_no: '',
+    philhealth: ''
   },
-  ss_no: '',
-  pagibig_no: '',
-  philhealth: ''
+  employment_details: {
+    job_title: 'select title',
+    department: 'select department'
+  },
+  salary: {
+    wage: '',
+    basis: '',
+    frequency: '',
+    leave_entitlement: ''
+  },
+  legal_compliance: {
+    contact: '',
+    pre_employment: '',
+    training_certificates: ''
+  },
+  performance: {
+    review: '',
+    actions: ''
+  }
 })
 
 const step = ref(1)

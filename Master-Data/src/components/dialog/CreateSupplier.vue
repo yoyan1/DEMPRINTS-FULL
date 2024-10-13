@@ -1,7 +1,16 @@
 <template>
   <div class="q-pa-md q-gutter-sm">
-    <div>
-      <img src="../../assets/undraw_Transfer_money_re_6o1h.png" class="rounded-sm" width="300px" height="200px" alt="" @click="prompt = true">
+    <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+      <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
+      </div>
+      <div class="py-3 px-6">
+        <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+        Supplier
+        </h5>
+      </div>
+      <div class="p-6 pt-0">
+        <q-btn label="supplier" icon="add" color="primary" rounded @click="prompt = true"/>
+      </div>
     </div>
     <q-dialog v-model="prompt" persistent>
       <q-card style="min-width: 350px">

@@ -31,7 +31,7 @@
             style="height: 45px; width: 45px"
             class="rounded-full mr-2"
           />
-          <q-span class="fs-1"> Sir Admin</q-span>
+          <q-span class="fs-1">Cristian Benigay</q-span>
         </q-item-label>
 
         <EssentialLink
@@ -43,11 +43,11 @@
         <!-- Corrected dropdown -->
         <q-btn-dropdown flat label="More Options">
           <q-list>
-            <q-item clickable v-close-popup @click="onItemClick">
+            <!-- <q-item clickable v-close-popup @click="onItemClick">
               <q-item-section>
                 <q-item-label>Photos</q-item-label>
               </q-item-section>
-            </q-item>
+            </q-item> -->
             <q-item clickable v-close-popup @click="onItemClick">
               <q-item-section>
                 <q-item-label>Settings</q-item-label>
@@ -77,18 +77,18 @@ const linksList = [
   {
     title: "Dashboard",
     icon: "school",
-    // link: "",
+    link: "/",
   },
   {
-    title: "User",
+    title: "Transaction",
     icon: "code",
-    link: "",
+    link: "#/transaction",
   },
-  {
-    title: "Sales",
-    icon: "chat",
-    link: "",
-  },
+  // {
+  //   title: "Sales Module",
+  //   icon: "chat",
+  //   link: "",
+  // },
 ];
 
 const leftDrawerOpen = ref(false);
